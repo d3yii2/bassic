@@ -2,21 +2,21 @@
 
 use dmstr\helpers\Html;
 use yii\helpers\Url;
-use yii\grid\GridView;
 use yii\widgets\DetailView;
 use yii\widgets\Pjax;
-use dmstr\bootstrap\Tabs;
 use kartik\editable\Editable;
+use kartik\grid\GridView;
+use kartik\grid\EditableColumn;
 
 /**
-* @var yii\web\View $this
-* @var app\models\TestContacts $model
-*/
+ * @var yii\web\View $this
+ * @var app\models\TestContacts $model
+ */
 $copyParams = $model->attributes;
 
 $this->title = Yii::t('app', 'TestContacts');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'TestContacts'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => (string)$model->id, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = ['label' => (string) $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'View');
 ?>
 <div class="giiant-crud test-contacts-view">
@@ -72,27 +72,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
     'model' => $model,
     'attributes' => [
                 [
-                'attribute'=>'id',
-                'format' => 'raw',
-                'value' => Editable::widget([
-                    'name' => 'id',
-                    'asPopover' => true,
-                    'value' => $model->id,
-                    'header' => $model->getAttributeLabel('id'),
-                    'inputType' => Editable::INPUT_TEXT,
-                    'size' => 'md',
-                    'options' => [
-                        'class' => 'form-control',
-                        'placeholder' => 'Enter ...'
-                    ],
-                    'ajaxSettings' => [
-                        'url' => Url::to(['editable', 'id' => $model->primaryKey]),
-                    ],
-                ]),
-                
-            ],
-            [
-                'attribute'=>'test_id',
+                'attribute' => 'test_id',
                 'format' => 'raw',
                 'value' => Editable::widget([
                     'name' => 'test_id',
@@ -112,7 +92,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
                 
             ],
             [
-                'attribute'=>'phone',
+                'attribute' => 'phone',
                 'format' => 'raw',
                 'value' => Editable::widget([
                     'name' => 'phone',
@@ -132,7 +112,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
                 
             ],
             [
-                'attribute'=>'email',
+                'attribute' => 'email',
                 'format' => 'raw',
                 'value' => Editable::widget([
                     'name' => 'email',
@@ -166,17 +146,9 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
     <?php $this->endBlock(); ?>
 
 
-    
-    <?= Tabs::widget(
-                 [
-                     'id' => 'relation-tabs',
-                     'encodeLabels' => false,
-                     'items' => [ [
-    'label'   => '<b class=""># '.$model->id.'</b>',
-    'content' => $this->blocks['app\models\TestContacts'],
-    'active'  => true,
-], ]
-                 ]
-    );
-    ?>
+        <div class="row">
+        <div class="col-md-4">
+            <?=$this->blocks['app\models\TestContacts']?>
+        </div>
+    </div>    
 </div>

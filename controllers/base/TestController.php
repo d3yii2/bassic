@@ -11,6 +11,7 @@ use yii\web\HttpException;
 use yii\helpers\Url;
 use yii\filters\AccessControl;
 use kartik\grid\EditableColumnAction;
+use yii\data\ActiveDataProvider;
 
 /**
 * TestController implements the CRUD actions for Test model.
@@ -34,7 +35,7 @@ class TestController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'editable', 'editable-column-update'],
+                        'actions' => ['index', 'view', 'create', 'create-rel', 'update', 'delete', 'editable', 'editable-column-update'],
                         'roles' => ['@'],
                     ],
                     [
@@ -44,7 +45,7 @@ class TestController extends Controller
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['update', 'create', 'delete', 'editable', 'editable-column-update'],
+                        'actions' => ['update', 'create', 'create-rel', 'delete', 'editable', 'editable-column-update'],
                         'roles' => ['@'],
                     ],
                 ],
@@ -114,9 +115,33 @@ class TestController extends Controller
             $msg = (isset($e->errorInfo[2]))?$e->errorInfo[2]:$e->getMessage();
             $model->addError('_exception', $msg);
         }
+        
         return $this->render('create', ['model' => $model]);
     }
 
+    /**
+    * Creates a new Test model.
+    * If creation is successful, the browser will be redirected to the 'view' page.
+    * @return mixed
+    */
+    public function actionCreateRel($relField)
+    {
+        $model = new Test;
+        $model->load($_GET);
+        $relAttributes = $model->attributes;
+
+        try {
+            if ($model->load($_POST) && $model->save()) {
+                return $this->goBack();
+            }
+        } catch (\Exception $e) {
+            $msg = (isset($e->errorInfo[2]))?$e->errorInfo[2]:$e->getMessage();
+            $model->addError('_exception', $msg);
+        }
+        
+        return $this->render('create', ['model' => $model, 'relAttributes' => $relAttributes]);
+    }    
+    
     /**
     * Updates an existing Test model.
     * If update is successful, the browser will be redirected to the 'view' page.

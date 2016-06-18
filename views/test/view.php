@@ -4,20 +4,19 @@ use dmstr\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\DetailView;
 use yii\widgets\Pjax;
-use dmstr\bootstrap\Tabs;
 use kartik\editable\Editable;
 use kartik\grid\GridView;
 use kartik\grid\EditableColumn;
 
 /**
-* @var yii\web\View $this
-* @var app\models\Test $model
-*/
+ * @var yii\web\View $this
+ * @var app\models\Test $model
+ */
 $copyParams = $model->attributes;
 
 $this->title = Yii::t('app', 'Test');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Tests'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => (string)$model->name, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = ['label' => (string) $model->name, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'View');
 ?>
 <div class="giiant-crud test-view">
@@ -73,27 +72,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
     'model' => $model,
     'attributes' => [
                 [
-                'attribute'=>'id',
-                'format' => 'raw',
-                'value' => Editable::widget([
-                    'name' => 'id',
-                    'asPopover' => true,
-                    'value' => $model->id,
-                    'header' => $model->getAttributeLabel('id'),
-                    'inputType' => Editable::INPUT_TEXT,
-                    'size' => 'md',
-                    'options' => [
-                        'class' => 'form-control',
-                        'placeholder' => 'Enter ...'
-                    ],
-                    'ajaxSettings' => [
-                        'url' => Url::to(['editable', 'id' => $model->primaryKey]),
-                    ],
-                ]),
-                
-            ],
-            [
-                'attribute'=>'name',
+                'attribute' => 'name',
                 'format' => 'raw',
                 'value' => Editable::widget([
                     'name' => 'name',
@@ -113,7 +92,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
                 
             ],
             [
-                'attribute'=>'description',
+                'attribute' => 'description',
                 'format' => 'raw',
                 'value' => Editable::widget([
                     'name' => 'description',
@@ -133,7 +112,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
                 
             ],
             [
-                'attribute'=>'createdate',
+                'attribute' => 'createdate',
                 'format' => 'raw',
                 'value' => Editable::widget([
                     'name' => 'createdate',
@@ -153,7 +132,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
                 
             ],
             [
-                'attribute'=>'update_dt',
+                'attribute' => 'update_dt',
                 'format' => 'raw',
                 'value' => Editable::widget([
                     'name' => 'update_dt',
@@ -197,7 +176,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
         ) ?>
   <?= Html::a(
             '<span class="glyphicon glyphicon-plus"></span> ' . Yii::t('app', 'New') . ' Test Contact',
-            ['test-contacts/create', 'TestContact' => ['test_id' => $model->id]],
+            ['test-contacts/create-rel', 'TestContacts' => ['test_id' => $model->id]],
             ['class'=>'btn btn-success btn-xs']
         ); ?>
 </div></div><?php Pjax::begin(['id'=>'pjax-TestContacts', 'enableReplaceState'=> false, 'linkSelector'=>'#pjax-TestContacts ul.pagination a, th a', 'clientOptions' => ['pjax:success'=>'function(){alert("yo")}']]) ?>
@@ -211,45 +190,41 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
 //        'lastPageLabel'  => Yii::t('app', 'Last')
 //    ],
     'columns' => [
-                        [
-                            'class' => '\kartik\grid\EditableColumn',
-                            'attribute' => 'id',
-                            'editableOptions' => [
-                                'formOptions' => [
-                                    'action' => [
-                                        'test-contacts/editable-column-update'
-                                    ]
-                                ]
-                            ]
-                        ]            
-                    ,
+        [
+            'class' => '\kartik\grid\EditableColumn',
+            'attribute' => 'phone',
+            'editableOptions' => [
+                'formOptions' => [
+                    'action' => [
+                        'test-contacts/editable-column-update'
+                    ]
+                ]
+            ]
+        ],
 
-                        [
-                            'class' => '\kartik\grid\EditableColumn',
-                            'attribute' => 'phone',
-                            'editableOptions' => [
-                                'formOptions' => [
-                                    'action' => [
-                                        'test-contacts/editable-column-update'
-                                    ]
-                                ]
-                            ]
-                        ]            
-                    ,
-
-                        [
-                            'class' => '\kartik\grid\EditableColumn',
-                            'attribute' => 'email',
-                            'editableOptions' => [
-                                'formOptions' => [
-                                    'action' => [
-                                        'test-contacts/editable-column-update'
-                                    ]
-                                ]
-                            ]
-                        ]            
-                    ,
-]
+        [
+            'class' => '\kartik\grid\EditableColumn',
+            'attribute' => 'email',
+            'editableOptions' => [
+                'formOptions' => [
+                    'action' => [
+                        'test-contacts/editable-column-update'
+                    ]
+                ]
+            ]
+        ],
+  
+        [
+            'class' => '\kartik\grid\ActionColumn',
+            'urlCreator' =>  
+                function($action, $model, $key, $index) {
+                    $params = is_array($key) ? $key : ['id' => (string) $key];
+                    $params[0] = 'test-contacts/' . $action;
+                    $params['TestContacts'] =  ['test_id' => $model->id];
+                    return Url::toRoute($params);            
+                },
+        ]            
+                 ]
 ])?>
     </div>
 <?php Pjax::end() ?>

@@ -11,6 +11,7 @@ use yii\web\HttpException;
 use yii\helpers\Url;
 use yii\filters\AccessControl;
 use kartik\grid\EditableColumnAction;
+use yii\data\ActiveDataProvider;
 
 /**
 * TestContactsController implements the CRUD actions for TestContacts model.
@@ -34,7 +35,7 @@ class TestContactsController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'editable', 'editable-column-update'],
+                        'actions' => ['index', 'view', 'create', 'create-rel', 'update', 'delete', 'editable', 'editable-column-update'],
                         'roles' => ['@'],
                     ],
                     [
@@ -44,7 +45,7 @@ class TestContactsController extends Controller
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['update', 'create', 'delete', 'editable', 'editable-column-update'],
+                        'actions' => ['update', 'create', 'create-rel', 'delete', 'editable', 'editable-column-update'],
                         'roles' => ['@'],
                     ],
                 ],
@@ -114,9 +115,36 @@ class TestContactsController extends Controller
             $msg = (isset($e->errorInfo[2]))?$e->errorInfo[2]:$e->getMessage();
             $model->addError('_exception', $msg);
         }
+        
         return $this->render('create', ['model' => $model]);
     }
 
+    /**
+    * Creates a new TestContacts model.
+    * If creation is successful, the browser will be redirected to the 'view' page.
+    * @return mixed
+    */
+    public function actionCreateRel()
+    {
+        $model = new TestContacts;
+        $model->load($_GET);
+        $relAttributes = $model->attributes;
+
+        try {
+            if ($model->load($_POST) && $model->save()) {
+                return $this->goBack();
+            }
+        } catch (\Exception $e) {
+            $msg = (isset($e->errorInfo[2]))?$e->errorInfo[2]:$e->getMessage();
+            $model->addError('_exception', $msg);
+        }
+        
+        return $this->render('create', [
+            'model' => $model, 
+            'relAttributes' => $relAttributes
+        ]);
+    }    
+    
     /**
     * Updates an existing TestContacts model.
     * If update is successful, the browser will be redirected to the 'view' page.
@@ -125,6 +153,10 @@ class TestContactsController extends Controller
     */
     public function actionUpdate($id)
     {
+        $model = new TestContacts;
+        $model->load($_GET);
+        $relAttributes = $model->attributes;
+        
         $model = $this->findModel($id);
 
         if ($model->load($_POST) && $model->save()) {
@@ -132,6 +164,7 @@ class TestContactsController extends Controller
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'relAttributes' => $relAttributes                
             ]);
         }
     }
