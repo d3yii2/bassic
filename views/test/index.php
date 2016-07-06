@@ -50,15 +50,10 @@ Yii::$app->view->params['pageButtons'] = Html::a('<span class="glyphicon glyphic
         </small>
     </h1>
     <div class="clearfix crud-navigation">
-<?php
-if(\Yii::$app->user->can('app_test_create')){
-?>
         <div class="pull-left">
             <?= Html::a('<span class="glyphicon glyphicon-plus"></span> ' . Yii::t('app', 'New'), ['create'], ['class' => 'btn btn-success']) ?>
         </div>
-<?php
-}
-?>
+
         <div class="pull-right">
 
                         

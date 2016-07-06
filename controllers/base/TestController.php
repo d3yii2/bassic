@@ -35,17 +35,38 @@ class TestController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'view', 'create', 'create-rel', 'update', 'delete', 'editable', 'editable-column-update'],
+                        'actions' => [
+                            'index',
+                            'view',
+                            'create',
+                            'create-rel',
+                            'update',
+                            'delete',
+                            'editable',
+                            'editable-column-update',
+                            'create-for-rel'
+                        ],
                         'roles' => ['@'],
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['index', 'view'],
+                        'actions' => [
+                            'index',
+                            'view'
+                        ],
                         'roles' => ['@'],
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['update', 'create', 'create-rel', 'delete', 'editable', 'editable-column-update'],
+                        'actions' => [
+                            'update',
+                            'create',
+                            'create-rel',
+                            'delete',
+                            'editable',
+                            'editable-column-update',
+                            'create-for-rel'
+                        ],
                         'roles' => ['@'],
                     ],
                 ],
@@ -81,11 +102,11 @@ class TestController extends Controller
     }
 
     /**
-    * Displays a single Test model.
-    * @param string $id
-    *
-    * @return mixed
-    */
+     * Displays a single Test model.
+     * @param string $id
+     *
+     * @return mixed
+     */
     public function actionView($id)
     {
         \Yii::$app->session['__crudReturnUrl'] = Url::previous();
@@ -97,16 +118,22 @@ class TestController extends Controller
     }
 
     /**
-    * Creates a new Test model.
-    * If creation is successful, the browser will be redirected to the 'view' page.
-    * @return mixed
-    */
+     * Creates a new Test model.
+     * If creation is successful, the browser will be redirected 
+     *  to the 'view' page or back, if parameter $goBack is true.
+     * @return mixed
+     */
     public function actionCreate()
     {
         $model = new Test;
-
+        $model->load($_GET);
+        $relAttributes = $model->attributes;
+        
         try {
             if ($model->load($_POST) && $model->save()) {
+                if($relAttributes){
+                    return $this->goBack();
+                }      
                 return $this->redirect(['view', 'id' => $model->id]);
             } elseif (!\Yii::$app->request->isPost) {
                 $model->load($_GET);
@@ -116,31 +143,24 @@ class TestController extends Controller
             $model->addError('_exception', $msg);
         }
         
-        return $this->render('create', ['model' => $model]);
+        return $this->render('create', [
+            'model' => $model,
+            'relAttributes' => $relAttributes,            
+            ]);
     }
-
+    
     /**
-    * Creates a new Test model.
-    * If creation is successful, the browser will be redirected to the 'view' page.
-    * @return mixed
-    */
-    public function actionCreateRel($relField)
+     * Add a new TestContacts record for relation grid and redirect back.
+     * @return mixed
+     */
+    public function actionCreateForRel()
     {
         $model = new Test;
         $model->load($_GET);
         $relAttributes = $model->attributes;
-
-        try {
-            if ($model->load($_POST) && $model->save()) {
-                return $this->goBack();
-            }
-        } catch (\Exception $e) {
-            $msg = (isset($e->errorInfo[2]))?$e->errorInfo[2]:$e->getMessage();
-            $model->addError('_exception', $msg);
-        }
-        
-        return $this->render('create', ['model' => $model, 'relAttributes' => $relAttributes]);
-    }    
+        $model->save();
+        return $this->goBack();
+    }
     
     /**
     * Updates an existing Test model.
@@ -150,6 +170,10 @@ class TestController extends Controller
     */
     public function actionUpdate($id)
     {
+        $model = new Test;
+        $model->load($_GET);
+        $relAttributes = $model->attributes;
+        
         $model = $this->findModel($id);
 
         if ($model->load($_POST) && $model->save()) {
@@ -157,6 +181,7 @@ class TestController extends Controller
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'relAttributes' => $relAttributes                
             ]);
         }
     }
@@ -177,6 +202,13 @@ class TestController extends Controller
             return $this->redirect(Url::previous());
         }
 
+        $model = new Test;
+        $model->load($_GET);
+        $relAttributes = $model->attributes;       
+        if($relAttributes){
+            return $this->redirect(Url::previous());
+        }        
+        
         // TODO: improve detection
         $isPivot = strstr('$id',',');
         if ($isPivot == true) {

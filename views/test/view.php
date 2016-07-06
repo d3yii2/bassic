@@ -175,8 +175,13 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
             ['class'=>'btn text-muted btn-xs']
         ) ?>
   <?= Html::a(
-            '<span class="glyphicon glyphicon-plus"></span> ' . Yii::t('app', 'New') . ' Test Contact',
-            ['test-contacts/create-rel', 'TestContacts' => ['test_id' => $model->id]],
+            '<span class="glyphicon glyphicon-plus"></span> ' . Yii::t('app', 'New'),
+            ['test-contacts/create', 'TestContacts' => ['test_id' => $model->id]],
+            ['class'=>'btn btn-success btn-xs']
+        ); ?>
+  <?= Html::a(
+            '<span class="glyphicon glyphicon-plus"></span> ' . Yii::t('app', 'Add row'),
+            ['test-contacts/create-for-rel', 'TestContacts' => ['test_id' => $model->id]],
             ['class'=>'btn btn-success btn-xs']
         ); ?>
 </div></div><?php Pjax::begin(['id'=>'pjax-TestContacts', 'enableReplaceState'=> false, 'linkSelector'=>'#pjax-TestContacts ul.pagination a, th a', 'clientOptions' => ['pjax:success'=>'function(){alert("yo")}']]) ?>
@@ -220,7 +225,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
                 function($action, $model, $key, $index) {
                     $params = is_array($key) ? $key : ['id' => (string) $key];
                     $params[0] = 'test-contacts/' . $action;
-                    $params['TestContacts'] =  ['test_id' => $model->id];
+                    $params['TestContacts'] = ['test_id' => $model->id];
                     return Url::toRoute($params);            
                 },
         ]            

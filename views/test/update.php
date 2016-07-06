@@ -5,7 +5,11 @@ use yii\helpers\Html;
 /**
 * @var yii\web\View $this
 * @var app\models\Test $model
+* @var string $relAttributes relation fields names for disabling
 */
+if(!isset($relAttributes)){
+    $relAttributes = false;
+}
 
 $this->title = Yii::t('app', 'Test') . $model->name . ', ' . Yii::t('app', 'Edit');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Tests'), 'url' => ['index']];
@@ -27,7 +31,8 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Edit');
     <hr />
 
     <?php echo $this->render('_form', [
-    'model' => $model,
+        'model' => $model,
+        'relAttributes' => $relAttributes,
     ]); ?>
 
 </div>
