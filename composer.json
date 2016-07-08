@@ -18,17 +18,19 @@
             "url": "https://github.com/unyii2/yii2-giiant.git"
         }        
     ],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "require": {
         "php": ">=5.4.0",
         "yiisoft/yii2": ">=2.0.5",
         "yiisoft/yii2-bootstrap": "*",
         "yiisoft/yii2-swiftmailer": "*",
         "schmunk42/yii2-giiant": "@dev",
+        "dmstr/yii2-migrate-command": "@stable",
         "kartik-v/yii2-editable": "@dev",
         "kartik-v/yii2-grid": "@dev",
         "kartik-v/yii2-mpdf": "@dev",
-        "warrence/yii2-kartikgii": "dev-master"
+        "warrence/yii2-kartikgii": "dev-master",
+        "d3yii2/d3pop3":"dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",
