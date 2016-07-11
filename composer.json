@@ -16,6 +16,10 @@
         {
             "type": "vcs",
             "url": "https://github.com/unyii2/yii2-giiant.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/lisiy50/get-mail.git"
         }        
     ],
     "minimum-stability": "dev",

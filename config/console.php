@@ -24,8 +24,9 @@ $config = [
             'class' => 'd3yii2\d3pop3\d3pop3',
             'pop3boxes' => [
                 [
-                    'model' => 'test',
-                    'record_id' => 77,
+                    'model' => 'app\models\test',
+                    'model_field' => 'description',
+                    'email_field' => 'from',
                     'host' => 'pop.gmail.com',
                     'user' => 'd3yii2d3pop3@gmail.com',
                     'password' => '2uvsKCrDU7MkXQKPxkXs',
@@ -50,7 +51,8 @@ $config = [
             'targets' => [
                 [
                     'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning'],
+                    //'levels' => ['error', 'warning'],
+                    'logFile' => $basePath . '/runtime/logs/console.log',
                 ],
             ],
         ],
