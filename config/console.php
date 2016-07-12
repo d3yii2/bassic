@@ -22,25 +22,18 @@ $config = [
         ],        
         'D3Pop3' => [
             'class' => 'd3yii2\d3pop3\d3pop3',
-            'pop3boxes' => [
+            'ConfigEmailContainerData' => [
                 [
                     'model' => 'app\models\test',
-                    'model_field' => 'description',
-                    'email_field' => 'from',
                     'host' => 'pop.gmail.com',
                     'user' => 'd3yii2d3pop3@gmail.com',
                     'password' => '2uvsKCrDU7MkXQKPxkXs',
                     'ssl' => 'SSL',
                 ],
-//                [
-//                    'model' => 'test',
-//                    'record_id' => 77,
-//                    'host' => 'mail.itc.neonet.lv',
-//                    'user' => 'rctedi@kls.lv',
-//                    'password' => '51f7cbXt1',
-//                    'ssl' => false,
-//                ],
             ],
+            'EmailContainers' => [
+                'd3yii2\d3pop3\components\ConfigEmailContainer',
+            ]
         ],
     ],
     'components' => [
@@ -48,10 +41,11 @@ $config = [
             'class' => 'yii\caching\FileCache',
         ],
         'log' => [
+            'traceLevel' => 5,
             'targets' => [
                 [
                     'class' => 'yii\log\FileTarget',
-                    //'levels' => ['error', 'warning'],
+                    'levels' => ['error', 'warning'],
                     'logFile' => $basePath . '/runtime/logs/console.log',
                 ],
             ],
@@ -59,6 +53,9 @@ $config = [
         'db' => $db,
     ],
     'params' => $params,
+    'aliases' => [
+        '@d3yii2' => '@vendor/d3yii2',
+    ],
         /*
           'controllerMap' => [
           'fixture' => [ // Fixture generation command line.
