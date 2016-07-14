@@ -154,6 +154,16 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
     ],
     ]); ?>
 
+<?= d3yii2\d3files\widgets\D3FilesWidget::widget(
+        [
+            'model'     => $model,
+            'model_id'  => $model->id,
+            'title'     => 'Attachmenti',
+            'icon'      => false,
+            'hideTitle' => false,
+            'readOnly'  => false
+        ]
+    ) ?>    
     
     <hr/>
 

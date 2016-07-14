@@ -7,6 +7,10 @@ $config = [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'modules' => [
+        'd3files' => [
+            'class'      => 'd3yii2\d3files\D3Files',
+            'upload_dir' => dirname(__DIR__) . '\upload\d3files',
+        ],
         'D3Pop3' => [
             'class' => 'd3yii2\d3pop3\d3pop3',
             'pop3boxes' => [
