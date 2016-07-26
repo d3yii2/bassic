@@ -44,7 +44,10 @@ class TestController extends Controller
                             'delete',
                             'editable',
                             'editable-column-update',
-                            'create-for-rel'
+                            'create-for-rel',
+                            'd3filesdownload',
+                            'd3filesupload',
+                            'd3filesdelete',
                         ],
                         'roles' => ['@'],
                     ],

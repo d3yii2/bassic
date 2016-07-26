@@ -28,3 +28,6 @@ phpunit.phar
 /upload
 /runtime
 /composer.lock
+
+# local config
+/config/*-local.php

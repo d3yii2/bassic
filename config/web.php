@@ -8,8 +8,9 @@ $config = [
     'bootstrap' => ['log'],
     'modules' => [
         'd3files' => [
-            'class'      => 'd3yii2\d3files\D3Files',
-            'upload_dir' => dirname(__DIR__) . '\upload\d3files',
+            'class'             => 'd3yii2\d3files\D3Files',
+            'upload_dir'        => dirname(__DIR__) . '\upload\d3files',
+            'disableController' => true,
         ],
         'D3Pop3' => [
             'class' => 'd3yii2\d3pop3\d3pop3',
@@ -83,6 +84,15 @@ $config = [
             ],
         ],
         'db' => require(__DIR__ . '/db.php'),
+        'i18n' => [
+            'translations' => [
+                'd3files*' => [
+                    'class'            => 'yii\i18n\PhpMessageSource',
+                    'basePath'         => '@vendor/d3yii2/d3files/messages',
+                    'forceTranslation' => true
+                ],
+            ],
+        ],
     /*
       'urlManager' => [
       'enablePrettyUrl' => true,

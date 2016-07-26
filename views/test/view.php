@@ -158,7 +158,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
         [
             'model'     => $model,
             'model_id'  => $model->id,
-            'title'     => 'Attachmenti',
+            'title'     => 'Attachments',
             'icon'      => false,
             'hideTitle' => false,
             'readOnly'  => false
