@@ -17,8 +17,8 @@ $config = [
     ],
     'modules' => [
         'd3files' => [
-            'class'      => 'd3yii2\d3files\D3Files',
-            'upload_dir' => $basePath . '/upload/d3files',
+            'class'     => 'd3yii2\d3files\D3Files',
+            'uploadDir' => $basePath . '/upload/d3files',
         ],        
         'D3Pop3' => [
             'class' => 'd3yii2\d3pop3\d3pop3',
