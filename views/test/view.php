@@ -154,7 +154,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
     ],
     ]); ?>
 
-<?= d3yii2\d3files\widgets\D3FilesWidget::widget(
+    <?= d3yii2\d3files\widgets\D3FilesWidget::widget(
         [
             'model'     => $model,
             'model_id'  => $model->id,
@@ -165,6 +165,15 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
         ]
     ) ?>    
     
+    <hr/>
+
+    <?= d3yii2\d3files\widgets\D3FilesFileDownloadWidget::widget(
+        [
+            'downloadUrl' => 'test/d3filesdownload',
+            'fileModelId' => 37,
+        ]
+    ) ?>
+
     <hr/>
 
     <?= Html::a('<span class="glyphicon glyphicon-trash"></span> ' . Yii::t('app', 'Delete'), ['delete', 'id' => $model->id],

@@ -10,10 +10,11 @@ $config = [
         'd3files' => [
             'class'              => 'd3yii2\d3files\D3Files',
             'uploadDir'          => dirname(__DIR__) . '\upload\d3files',
-            'disableController'  => true,
+            'disableController'  => false,
             'hashSalt'           => false, // Set salt in your web-local.php config, empty value will disable sharing
             'sharedExpireDays'   => 5,
             'sharedLeftLoadings' => 5,
+            //'imageExtensions'    => [],
         ],
         'D3Pop3' => [
             'class' => 'd3yii2\d3pop3\d3pop3',
